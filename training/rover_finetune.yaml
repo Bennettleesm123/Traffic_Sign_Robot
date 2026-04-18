@@ -1,0 +1,24 @@
+# Point ``path`` at your merged YOLO dataset (Roboflow export OR output of lisa_csv_to_yolo.py).
+# From a folder of raw images, generate ``datasets/rover_signs/data.yaml`` + layout:
+#   python training/scripts/bootstrap_rover_dataset.py --images /path/to/your/uploads
+# Then fix the empty ``labels/**/*.txt`` (YOLO bbox lines) unless you passed ``--labels-dir``.
+# Train:
+#   python -m robot.train_yolo --data datasets/rover_signs/data.yaml --model yolov8n.pt --epochs 100 --batch 8
+# Or copy this file and set ``path`` manually:
+#   python -m robot.train_yolo --data training/rover_finetune.yaml --model yolov8n.pt --epochs 100 --batch 8
+#
+# After training, inference:
+#   python -m robot.camera_test --yolo runs/detect/train/weights/best.pt --class-filter none
+
+path: /absolute/path/to/your_yolo_dataset
+train: images/train
+val: images/val
+
+names:
+  0: stop sign
+  1: left turn only
+  2: right turn only
+  3: u turn only
+  4: traffic light
+
+nc: 5

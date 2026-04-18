@@ -1,0 +1,46 @@
+CV Rover Signs — training vs COCO (read this with CV_Rover_Signs.pdf in this folder)
+===================================================================================
+
+What the PDF shows (MUTCD-style regulatory signs for your rover):
+  • Stop
+  • Left turn only  (e.g. R3-5L)
+  • Right turn only (e.g. R3-5R)
+  • U-turn only     (e.g. R3-19a)
+  • Traffic lights  (detector + optional HSV color stage in code)
+
+FUNDAMENTAL LIMIT: yolov8n.pt (COCO-80) does NOT have classes for “left turn only”, “right turn only”,
+or “U-turn only”. It only overlaps your PDF for:
+  • stop sign
+  • traffic light
+  • (person — kept for your requirement)
+
+So reliable detection of turn/U-turn signs REQUIRES a fine-tuned YOLO (or similar) trained on images
+of those exact printed signs from your PDF.
+
+Suggested training layout
+-------------------------
+  rover_signs_dataset/
+    images/train/   *.jpg
+    images/val/     *.jpg
+    labels/train/   *.txt   # YOLO bbox format, one line per box: cls cx cy w h (normalized)
+    labels/val/
+
+Class indices must match ``names`` in your data.yaml. Example: training/rover_signs.yaml.example
+
+Policy mapping
+--------------
+robot/sign_policy.py DEFAULT_LABEL_TO_ACTION must match the string values in ``names`` (e.g.
+"left turn only", "u turn only"). Underscore aliases (left_turn_only, …) are also listed there.
+
+After training, run inference with:
+  python -m robot.camera_test --yolo path/to/best.pt --class-filter none
+
+COCO demo with less clutter
+---------------------------
+For yolov8n.pt only, the code uses predict(classes=[0,9,11]) so chairs/laptops/etc. are never
+proposed. This does not add missing sign classes.
+
+Full dataset comparison (LISA, Roboflow, Mapillary, …)
+------------------------------------------------------
+See training/DATASETS.md. Scripts: training/scripts/lisa_csv_to_yolo.py,
+training/scripts/fetch_roboflow_dataset.py. Template YAML: training/rover_finetune.yaml.

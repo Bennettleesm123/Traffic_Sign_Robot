@@ -1,0 +1,63 @@
+Stopping the camera (release the webcam)
+------------------------------------------
+There is no separate “disconnect” command. The USB camera is released when the OpenCV
+program exits:
+
+  • In the preview window: press **q**
+  • In the terminal: **Ctrl+C**
+
+After that, the script calls cap.release() and you can unplug the camera or run another app.
+
+Files in this folder (US MUTCD–style, public domain via MUTCD)
+-------------------------------------------------------------
+Open any .svg in a browser or Inkscape/Illustrator, then print at large size (A3 or US Letter
+“fit to page” borderless if possible). Matte paper reduces glare for CV.
+
+**Same print size as R3-5L / R3-5R (recommended for a consistent test set)**  
+Use these so STOP and the turn arrows share one sheet geometry (easier for the camera):
+
+  MUTCD_R1-1_stop_same_size_as_R3-5_sheet.svg   Stop (R1-1), scaled to R3-5 sheet proportions
+  MUTCD_R3-5L_left_turn_only.svg                 Lane must turn left (R3-5L)
+  MUTCD_R3-5R_right_turn_only.svg                Lane must turn right (R3-5R)
+
+**U-turn (for training label → robot U-turn maneuver)**  
+  MUTCD_R3-19a_u_turn_only.svg                   “Lane for U Turn Only” (R3-19a)
+
+In `robot/sign_policy.py`, map your YOLO class name to `U_TURN` (defaults include:
+`u turn`, `u-turn`, `u turn only`, `lane for u turn only`).
+
+**Other arrows (optional)**  
+  MUTCD_R1-1_stop.svg              Full-size stop R1-1 (30×30 in artwork; larger sheet than R3-5)
+  MUTCD_R3-6L_left_arrow.svg       Left or straight (R3-6L)
+  MUTCD_R3-6R_right_arrow.svg      Right or straight (R3-6R)
+
+R3-5L / R3-5R are the clearest “only left” / “only right” arrows for training. R3-6L/R3-6R show
+two movements on one sign (good for harder tests).
+
+Traffic lights for the HSV stage
+--------------------------------
+This repo does not ship a traffic-light graphic; for printed tests use either:
+  • A real USB traffic-light toy, or
+  • A sheet with three large solid circles (red / yellow / green) side by side, or
+  • Search Wikimedia Commons for “traffic light” diagrams (check license).
+
+Match your YOLO class name for the *detector* to one of the strings in
+robot/settings.py (traffic_light_generic_substrings). Color is handled by
+robot/traffic_light_color.py on the crop.
+
+Official sign PDFs (more signs)
+-------------------------------
+FHWA Standard Highway Signs (Regulatory, etc.):
+https://mutcd.fhwa.dot.gov/ser-shs_millennium.htm
+
+Source URLs for these SVGs (Wikimedia Commons; MUTCD public domain)
+-------------------------------------------------------------------
+https://upload.wikimedia.org/wikipedia/commons/c/c0/MUTCD_R1-1.svg
+https://upload.wikimedia.org/wikipedia/commons/9/9a/MUTCD_R3-5L.svg
+https://upload.wikimedia.org/wikipedia/commons/0/09/MUTCD_R3-5R.svg
+https://upload.wikimedia.org/wikipedia/commons/6/62/MUTCD_R3-6L.svg
+https://upload.wikimedia.org/wikipedia/commons/5/5d/MUTCD_R3-6R.svg
+https://upload.wikimedia.org/wikipedia/commons/2/20/MUTCD_R3-19a.svg
+
+Re-download from a terminal (if a file is missing):
+  cd printable_signs && bash download_signs.sh

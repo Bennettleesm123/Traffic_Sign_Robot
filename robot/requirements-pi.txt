@@ -1,0 +1,17 @@
+# Raspberry Pi 4B — use a venv, then: pip install -r robot/requirements-pi.txt
+# Prefer 64-bit Raspberry Pi OS; install libcamera stack if using Picamera2.
+
+opencv-python-headless>=4.8.0
+numpy>=1.24.0
+mediapipe>=0.10.0
+gpiozero>=2.0
+
+# Optional — legacy traffic-sign pipeline (run_sign_robot only)
+# ultralytics>=8.0.0
+# torch>=2.0.0
+# torchvision>=0.15.0
+
+# Faster ONNX inference (optional): pip install onnxruntime
+# After: python -m robot.export_model --weights best.pt
+
+# Optional: Picamera2 is installed via apt on Raspberry Pi OS, not always via pip.

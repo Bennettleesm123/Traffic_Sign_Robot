@@ -1,0 +1,21 @@
+# Example Ultralytics dataset config for CV Rover signs (see training/CV_Rover_Signs.pdf).
+# Copy to e.g. datasets/rover_signs/data.yaml and fix `path`.
+#
+# Train:
+#   python -m robot.train_yolo --data datasets/rover_signs/data.yaml --epochs 120
+#
+# Run with your checkpoint (disable COCO class filter — indices won't match):
+#   python -m robot.camera_test --yolo runs/detect/train/weights/best.pt --class-filter none
+
+path: /absolute/path/to/rover_signs_dataset
+train: images/train
+val: images/val
+
+names:
+  0: stop sign
+  1: left turn only
+  2: right turn only
+  3: u turn only
+  4: traffic light
+
+nc: 5

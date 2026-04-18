@@ -1,0 +1,13 @@
+# Laptop / Mac / Windows — live camera window (needs OpenCV GUI; not headless by default).
+# From repo root:
+#   python3 -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+#   pip install -r robot/requirements-laptop.txt
+
+opencv-python>=4.8.0
+numpy>=1.24.0
+mediapipe>=0.10.0
+
+# Optional — legacy YOLO camera test / run_sign_robot
+# ultralytics>=8.0.0
+# torch>=2.0.0
+# torchvision>=0.15.0

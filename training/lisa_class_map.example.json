@@ -1,0 +1,5 @@
+{
+  "_comment": "Copy to lisa_class_map.json. Keys MUST match --list-tags output from lisa_csv_to_yolo.py",
+  "stop": "stop sign",
+  "signalAhead": "traffic light"
+}

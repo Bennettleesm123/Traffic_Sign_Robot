@@ -38,3 +38,14 @@ Thumbs.db
 
 # Cahche files
 *.pyc
+
+# Python venv / local caches (do not push)
+.venv/
+.cache_mp/
+
+# Large ML weights — GitHub hard limit 100 MB per file; use Git LFS or host elsewhere
+*.pt
+yolov8n.pt
+
+# TensorFlow 1 Faster R-CNN bundle (hundreds of MB — keep local only)
+lisa/experiments/training/faster_rcnn_resnet101_coco_2018_01_28/
